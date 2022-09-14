@@ -1,8 +1,8 @@
 using Examples.EntityFrameworkCore.ContosoUniversity.Data;
 using Examples.EntityFrameworkCore.ContosoUniversity.Models;
 using Examples.EntityFrameworkCore.Xunit;
+using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Xunit.Abstractions;
@@ -17,22 +17,20 @@ public class StudentRepositoryTests : IDisposable
     public StudentRepositoryTests(ITestOutputHelper testOutputHelper)
     {
         var services = new ServiceCollection();
-        services.AddLogging(builder =>
-        {
-            builder.SetMinimumLevel(LogLevel.Trace);
-            builder.AddFilter("Default", LogLevel.Information);
-            builder.AddFilter("Microsoft", LogLevel.Warning);
-            builder.AddFilter("Microsoft.EntityFrameworkCore.Database", LogLevel.Information);
-            builder.AddFilter("Examples", LogLevel.Trace);
-            builder.AddDebug();
-            builder.AddProvider(new XunitOutputLoggerProvider(testOutputHelper));
-        });
+        services.AddLogging(builder
+            => builder.AddXunitDefault()
+                .AddProvider(new XunitOutputLoggerProvider(testOutputHelper))
+                );
 
-        services.AddDbContext<SchoolContext>(options =>
-            options
-                .UseInMemoryDatabase(nameof(StudentRepositoryTests))
-                .ConfigureWarnings(b => b.Ignore(InMemoryEventId.TransactionIgnoredWarning))
-            );
+        var connection = new SqliteConnection("Filename=:memory:");
+        connection.Open();
+
+        services.AddDbContext<SchoolContext>(options
+            => options
+                .UseSqlite(connection)
+                // .UseInMemoryDatabase(nameof(StudentRepositoryTests))
+                // .ConfigureWarnings(b => b.Ignore(InMemoryEventId.TransactionIgnoredWarning))
+                );
 
         services.AddScoped<IStudentRepository, StudentRepository>();
 

@@ -43,6 +43,7 @@ dotnet tool install dotnet-ef
 ### Build
 
 ```shell
+dotnet restore
 dotnet tool restore
 
 dotnet build

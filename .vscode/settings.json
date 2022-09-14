@@ -7,5 +7,5 @@
   "csharpFormatUsings.sortOrder": "System",
   "csharpFormatUsings.removeUnnecessaryUsings": true,
   "csharpextensions.useFileScopedNamespace": true,
-  "csharpextensions.privateMemberPrefix": "_"
+  "csharpextensions.privateMemberPrefix": "_",
 }

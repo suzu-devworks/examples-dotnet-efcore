@@ -13,7 +13,7 @@
     "kreativ-software.csharpextensions",
     "k--kato.docomment",
     "gaoshan0621.csharp-format-usings",
-    "fudge.auto-using"
+    "Fudge.auto-using"
   ],
   // Use 'forwardPorts' to make a list of ports inside the container available locally.
   // "forwardPorts": [5000, 5001],

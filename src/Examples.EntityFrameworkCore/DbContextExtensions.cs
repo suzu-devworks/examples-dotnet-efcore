@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
@@ -20,6 +22,14 @@ public static class DbContextExtensions
 
         return fromClause;
     }
+
+    public static IReadOnlyList<IProperty> FindPrimaryKeyProperties<T>(this DbContext dbContext, T? _ = default)
+        => dbContext.FindEntityType<T>()?.FindPrimaryKey()?.Properties
+            ?? Enumerable.Empty<IProperty>().ToList().AsReadOnly();
+
+    public static IReadOnlyList<IProperty> FindProperties<T>(this DbContext dbContext, T? _, IEnumerable<string> propertyNames)
+        => dbContext.FindEntityType<T>()?.FindProperties(propertyNames.ToList())
+            ?? Enumerable.Empty<IProperty>().ToList().AsReadOnly();
 
     private static IEntityType? FindEntityType<T>(this DbContext dbContext)
     {

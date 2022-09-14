@@ -1,6 +1,6 @@
+using Examples.EntityFrameworkCore.ContosoUniversity.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using Examples.EntityFrameworkCore.ContosoUniversity.Models;
 
 namespace Examples.EntityFrameworkCore.ContosoUniversity.Data;
 

@@ -1,2 +1,2 @@
-global using Xunit;
 global using ChainingAssertion;
+global using Xunit;
