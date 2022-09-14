@@ -1,56 +1,78 @@
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Diagnostics;
-using Microsoft.Extensions.Logging;
 using Examples.EntityFrameworkCore.ContosoUniversity.Data;
 using Examples.EntityFrameworkCore.ContosoUniversity.Models;
 using Examples.EntityFrameworkCore.Xunit;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Xunit.Abstractions;
 
 namespace Examples.EntityFrameworkCore.ContosoUniversity.Repositories;
 
 public class StudentRepositoryTests : IDisposable
 {
-    private readonly SchoolContext _context;
-    private readonly StudentRepository _repository;
+    private readonly IServiceProvider _serviceProvider;
+    private readonly IStudentRepository _repository;
 
     public StudentRepositoryTests(ITestOutputHelper testOutputHelper)
     {
-        var options = new DbContextOptionsBuilder<SchoolContext>()
-            .UseInMemoryDatabase(nameof(StudentRepositoryTests))
-            .ConfigureWarnings(b => b.Ignore(InMemoryEventId.TransactionIgnoredWarning))
-            .Options;
-
-        var logFactory = LoggerFactory.Create(builder =>
+        var services = new ServiceCollection();
+        services.AddLogging(builder =>
         {
             builder.SetMinimumLevel(LogLevel.Trace);
-            builder.AddProvider(new XunitLoggerProvider(testOutputHelper));
+            builder.AddFilter("Default", LogLevel.Information);
+            builder.AddFilter("Microsoft", LogLevel.Warning);
+            builder.AddFilter("Microsoft.EntityFrameworkCore.Database", LogLevel.Information);
+            builder.AddFilter("Examples", LogLevel.Trace);
+            builder.AddDebug();
+            builder.AddProvider(new XunitOutputLoggerProvider(testOutputHelper));
         });
 
-        var logger1 = logFactory.CreateLogger<SchoolContext>();
-        _context = new SchoolContext(options, logger1);
+        services.AddDbContext<SchoolContext>(options =>
+            options
+                .UseInMemoryDatabase(nameof(StudentRepositoryTests))
+                .ConfigureWarnings(b => b.Ignore(InMemoryEventId.TransactionIgnoredWarning))
+            );
 
-        _context.Database.EnsureDeleted();
-        _context.Database.EnsureCreated();
+        services.AddScoped<IStudentRepository, StudentRepository>();
 
-        _context.Students.AddRange(
+        _serviceProvider = services.BuildServiceProvider();
+        var context = _serviceProvider.GetRequiredService<SchoolContext>();
+
+        context.Database.EnsureDeleted();
+        context.Database.EnsureCreated();
+
+        context.Students.AddRange(
             new Student { FirstMidName = "Carson", LastName = "Alexander", EnrollmentDate = DateTime.Parse("2019-09-01") },
             new Student { FirstMidName = "Meredith", LastName = "Alonso", EnrollmentDate = DateTime.Parse("2017-09-01") },
             new Student { FirstMidName = "Arturo", LastName = "Anand", EnrollmentDate = DateTime.Parse("2018-09-01") }
         );
-        _context.SaveChanges();
+        context.SaveChanges();
 
-        var logger2 = logFactory.CreateLogger<StudentRepository>();
-        _repository = new StudentRepository(_context, logger2);
+        _repository = _serviceProvider.GetRequiredService<IStudentRepository>();
+
     }
 
     public void Dispose()
     {
-        _context?.Dispose();
+        (_serviceProvider as IDisposable)?.Dispose();
         GC.SuppressFinalize(this);
     }
 
     [Fact]
     public async Task Test1()
+    {
+
+        var records = await _repository.FindAllAsync();
+
+        // Assertion.
+        records.Count().Is(3);
+
+        return;
+    }
+
+    [Fact]
+    public async Task Test2()
     {
 
         var records = await _repository.FindAllAsync();

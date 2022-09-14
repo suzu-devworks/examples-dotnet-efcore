@@ -3,11 +3,11 @@ using Xunit.Abstractions;
 
 namespace Examples.EntityFrameworkCore.Xunit;
 
-public class XunitLoggerProvider : ILoggerProvider
+public class XunitOutputLoggerProvider : ILoggerProvider
 {
     private readonly ITestOutputHelper _testOutputHelper;
 
-    public XunitLoggerProvider(ITestOutputHelper testOutputHelper)
+    public XunitOutputLoggerProvider(ITestOutputHelper testOutputHelper)
     {
         _testOutputHelper = testOutputHelper;
     }
