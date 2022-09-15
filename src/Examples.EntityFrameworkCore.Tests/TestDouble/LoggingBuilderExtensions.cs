@@ -1,6 +1,6 @@
 using Microsoft.Extensions.Logging;
 
-namespace Examples.EntityFrameworkCore.Xunit;
+namespace Examples.EntityFrameworkCore.TestDouble;
 
 public static class LoggingBuilderExtensions
 {

@@ -1,8 +1,15 @@
 using Microsoft.Extensions.Logging;
-using Xunit.Abstractions;
 
 namespace Examples.EntityFrameworkCore.Xunit;
 
+/// <summary>
+/// <see cref="ILoggerProvider" /> implementation for xunit.
+/// </summary>
+/// <examples>
+/// <code>
+/// dotnet test -l "console;verbosity=detailed"
+/// </code>
+/// </examples>
 public class XunitOutputLoggerProvider : ILoggerProvider
 {
     private readonly ITestOutputHelper _testOutputHelper;

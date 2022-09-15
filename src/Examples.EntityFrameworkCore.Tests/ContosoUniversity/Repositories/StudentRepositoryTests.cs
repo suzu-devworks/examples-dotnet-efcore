@@ -1,11 +1,11 @@
 using Examples.EntityFrameworkCore.ContosoUniversity.Data;
 using Examples.EntityFrameworkCore.ContosoUniversity.Models;
+using Examples.EntityFrameworkCore.TestDouble;
 using Examples.EntityFrameworkCore.Xunit;
-using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Xunit.Abstractions;
 
 namespace Examples.EntityFrameworkCore.ContosoUniversity.Repositories;
 
@@ -22,21 +22,17 @@ public class StudentRepositoryTests : IDisposable
                 .AddProvider(new XunitOutputLoggerProvider(testOutputHelper))
                 );
 
-        var connection = new SqliteConnection("Filename=:memory:");
-        connection.Open();
-
         services.AddDbContext<SchoolContext>(options
             => options
-                .UseSqlite(connection)
-                // .UseInMemoryDatabase(nameof(StudentRepositoryTests))
-                // .ConfigureWarnings(b => b.Ignore(InMemoryEventId.TransactionIgnoredWarning))
+                .UseInMemoryDatabase(nameof(StudentRepositoryTests))
+                .ConfigureWarnings(b => b.Ignore(InMemoryEventId.TransactionIgnoredWarning))
                 );
 
         services.AddScoped<IStudentRepository, StudentRepository>();
 
         _serviceProvider = services.BuildServiceProvider();
-        var context = _serviceProvider.GetRequiredService<SchoolContext>();
 
+        var context = _serviceProvider.GetRequiredService<SchoolContext>();
         context.Database.EnsureDeleted();
         context.Database.EnsureCreated();
 
@@ -56,6 +52,7 @@ public class StudentRepositoryTests : IDisposable
         (_serviceProvider as IDisposable)?.Dispose();
         GC.SuppressFinalize(this);
     }
+
 
     [Fact]
     public async Task Test1()
