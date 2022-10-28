@@ -2,7 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 
-namespace Examples.EntityFrameworkCore;
+namespace Examples.EntityFrameworkCore.Data;
 
 public static class DbContextExtensions
 {
@@ -11,7 +11,7 @@ public static class DbContextExtensions
         var entityType = dbContext.FindEntityType<T>();
         if (entityType is null)
         {
-            throw new InvalidOperationException($"IEntityType is not found: Type=\"{typeof(T)}\".");
+            throw new InvalidOperationException($"IEntityType not found: Type=\"{typeof(T)}\".");
         }
 
         var fromClause = dbContext.Database.IsSchemaSupported()

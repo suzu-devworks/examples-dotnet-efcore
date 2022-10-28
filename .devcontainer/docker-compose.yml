@@ -11,5 +11,5 @@ services:
       - DOTNET_ENVIRONMENT=Development
     tty: true
     volumes:
-      - ..:/workspaces
-    working_dir: /workspaces
+      - ..:/examples-dotnet-efcore
+    working_dir: /examples-dotnet-efcore

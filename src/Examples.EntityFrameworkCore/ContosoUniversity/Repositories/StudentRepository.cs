@@ -46,13 +46,13 @@ public class StudentRepository : IStudentRepository
 
     public async Task AddAsync(Student student, CancellationToken cancelToken = default)
     {
-        _dbContext.Add(student);
+        await _dbContext.AddAsync(student, cancelToken);
         await _dbContext.SaveChangesAsync(cancelToken);
 
         return;
     }
 
-    public async Task ModifyAsync(int id, Student modifier, CancellationToken cancelToken = default)
+    public async Task UpdateAsync(int id, Student modifier, CancellationToken cancelToken = default)
     {
         if (id != modifier.ID)
         {
@@ -67,12 +67,12 @@ public class StudentRepository : IStudentRepository
 
     public async Task RemoveAsync(int id, CancellationToken cancelToken = default)
     {
-        var student = await _dbContext.Students
+        var target = await _dbContext.Students
             .FirstOrDefaultAsync(x => x.ID == id, cancelToken);
 
-        if (student is not null)
+        if (target is not null)
         {
-            _dbContext.Remove(student!);
+            _dbContext.Remove(target);
             await _dbContext.SaveChangesAsync(cancelToken);
         }
 

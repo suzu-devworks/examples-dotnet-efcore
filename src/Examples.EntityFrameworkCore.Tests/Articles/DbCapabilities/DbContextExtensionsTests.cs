@@ -1,8 +1,10 @@
 using Examples.EntityFrameworkCore.ContosoUniversity.Data;
 using Examples.EntityFrameworkCore.ContosoUniversity.Models;
+using Examples.EntityFrameworkCore.Data;
+using Examples.EntityFrameworkCore.InMemory;
 using Microsoft.EntityFrameworkCore;
 
-namespace Examples.EntityFrameworkCore.Sqlite;
+namespace Examples.EntityFrameworkCore.Articles.DbCapabilities;
 
 public class DbContextExtensionsTests : IDisposable
 {
@@ -11,7 +13,7 @@ public class DbContextExtensionsTests : IDisposable
     public DbContextExtensionsTests()
     {
         var options = new DbContextOptionsBuilder<SchoolContext>()
-            .UseSqlite()
+            .UseInMemoryDatabaseDefault()
             .Options;
 
         _context = new SchoolContext(options);
@@ -27,15 +29,9 @@ public class DbContextExtensionsTests : IDisposable
     [Fact]
     public void WnenCallingGetTableName()
     {
-        var context = _context;
-
-        var studentTableName = context.GetTableName(new Student());
-        var enrollmentTableName = context.GetTableName(new Enrollment());
-        var courseTableName = context.GetTableName(new Course());
-
-        studentTableName.Is("Students");
-        enrollmentTableName.Is("Enrollments");
-        courseTableName.Is("Courses");
+        _context.GetTableName(new Student()).Is("Students");
+        _context.GetTableName(new Enrollment()).Is("Enrollments");
+        _context.GetTableName(new Course()).Is("Courses");
 
         return;
     }

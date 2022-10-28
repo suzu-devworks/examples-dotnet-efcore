@@ -432,6 +432,12 @@ $RECYCLE.BIN/
 .idea/
 *.sln.iml
 
+# SQLite
+*.db
+
+# Own
+Temp/
+
 ##
 ## Visual Studio Code
 ##

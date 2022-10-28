@@ -2,7 +2,7 @@
   "name": "C# (.NET Core)",
   "dockerComposeFile": ["docker-compose.yml", "docker-compose.sqlserver.yml"],
   "service": "dev",
-  "workspaceFolder": "/workspaces",
+  "workspaceFolder": "/examples-dotnet-efcore",
   // Set *default* container specific settings.json values on container create.
   "settings": {},
   // Add the IDs of extensions you want installed when the container is created.

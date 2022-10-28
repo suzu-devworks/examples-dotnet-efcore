@@ -1,10 +1,18 @@
 using Microsoft.Extensions.Logging;
 
-namespace Examples.EntityFrameworkCore.TestDouble;
+namespace Examples.EntityFrameworkCore.Xunit;
 
 public static class LoggingBuilderExtensions
 {
-    public static ILoggingBuilder AddXunitDefault(this ILoggingBuilder builder)
+    public static ILoggingBuilder AddXunitDebug(this ILoggingBuilder builder, ITestOutputHelper helper)
+    {
+        builder.AddXunitDebug()
+            .AddProvider(new XunitOutputLoggerProvider(helper));
+
+        return builder;
+    }
+
+    public static ILoggingBuilder AddXunitDebug(this ILoggingBuilder builder)
     {
         builder.SetMinimumLevel(LogLevel.Trace);
         builder

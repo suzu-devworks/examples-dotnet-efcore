@@ -1,11 +1,8 @@
 using Examples.EntityFrameworkCore.ContosoUniversity.Data;
 using Examples.EntityFrameworkCore.ContosoUniversity.Models;
-using Examples.EntityFrameworkCore.TestDouble;
+using Examples.EntityFrameworkCore.InMemory;
 using Examples.EntityFrameworkCore.Xunit;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 
 namespace Examples.EntityFrameworkCore.ContosoUniversity.Repositories;
 
@@ -18,15 +15,10 @@ public class StudentRepositoryTests : IDisposable
     {
         var services = new ServiceCollection();
         services.AddLogging(builder
-            => builder.AddXunitDefault()
-                .AddProvider(new XunitOutputLoggerProvider(testOutputHelper))
-                );
+            => builder.AddXunitDebug(testOutputHelper));
 
         services.AddDbContext<SchoolContext>(options
-            => options
-                .UseInMemoryDatabase(nameof(StudentRepositoryTests))
-                .ConfigureWarnings(b => b.Ignore(InMemoryEventId.TransactionIgnoredWarning))
-                );
+            => options.UseInMemoryDatabaseDefault());
 
         services.AddScoped<IStudentRepository, StudentRepository>();
 
@@ -55,7 +47,7 @@ public class StudentRepositoryTests : IDisposable
 
 
     [Fact]
-    public async Task Test1()
+    public async Task WhenCallingFindAllAsync()
     {
 
         var records = await _repository.FindAllAsync();
@@ -67,14 +59,36 @@ public class StudentRepositoryTests : IDisposable
     }
 
     [Fact]
-    public async Task Test2()
+    public async Task WhenCallingFindAsync()
     {
-
-        var records = await _repository.FindAllAsync();
+        var record = await _repository.FindAsync(1);
 
         // Assertion.
-        records.Count().Is(3);
+        record.IsNotNull();
+        record!.ID.Is(1);
 
         return;
     }
+
+    [Fact]
+    public async Task WhenCallingAddAsync()
+    {
+        var input = new Student
+        {
+            FirstMidName = "Hoge",
+            LastName = "Foo",
+            EnrollmentDate = DateTime.Parse("2022-10-01")
+        };
+
+        await _repository.AddAsync(input);
+
+
+        // Assertion.
+        var records = await _repository.FindAllAsync();
+        records.Count().Is(4);
+
+        return;
+    }
+
+
 }

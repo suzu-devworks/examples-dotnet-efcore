@@ -1,8 +1,9 @@
 using Examples.EntityFrameworkCore.ContosoUniversity.Data;
 using Examples.EntityFrameworkCore.ContosoUniversity.Models;
+using Examples.EntityFrameworkCore.Data;
 using Microsoft.EntityFrameworkCore;
 
-namespace Examples.EntityFrameworkCore.SqlServer;
+namespace Examples.EntityFrameworkCore.Articles.DbCapabilities;
 
 public class DbContextExtensionsTests : IDisposable
 {
@@ -26,15 +27,9 @@ public class DbContextExtensionsTests : IDisposable
     [Fact]
     public void WnenCallingGetTableName()
     {
-        var context = _context;
-
-        var studentTableName = context.GetTableName(new Student());
-        var enrollmentTableName = context.GetTableName(new Enrollment());
-        var courseTableName = context.GetTableName(new Course());
-
-        studentTableName.Is("user.Students");
-        enrollmentTableName.Is("user.Enrollments");
-        courseTableName.Is("user.Courses");
+        _context.GetTableName(new Student()).Is("user.Students");
+        _context.GetTableName(new Enrollment()).Is("user.Enrollments");
+        _context.GetTableName(new Course()).Is("user.Courses");
 
         return;
     }

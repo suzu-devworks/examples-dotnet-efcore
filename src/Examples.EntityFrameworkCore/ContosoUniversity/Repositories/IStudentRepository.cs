@@ -10,7 +10,7 @@ public interface IStudentRepository
 
     public Task AddAsync(Student student, CancellationToken cancelToken = default);
 
-    public Task ModifyAsync(int id, Student modifier, CancellationToken cancelToken = default);
+    public Task UpdateAsync(int id, Student modifier, CancellationToken cancelToken = default);
 
     public Task RemoveAsync(int id, CancellationToken cancelToken = default);
 
