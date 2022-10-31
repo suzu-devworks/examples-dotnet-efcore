@@ -2,7 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 
-namespace Examples.EntityFrameworkCore.Data;
+namespace Examples.EntityFrameworkCore.Metadata;
 
 public static class DbContextExtensions
 {

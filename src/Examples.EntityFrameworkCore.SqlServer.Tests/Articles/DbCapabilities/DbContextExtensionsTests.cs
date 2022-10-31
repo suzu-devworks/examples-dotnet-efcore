@@ -1,6 +1,6 @@
 using Examples.EntityFrameworkCore.ContosoUniversity.Data;
 using Examples.EntityFrameworkCore.ContosoUniversity.Models;
-using Examples.EntityFrameworkCore.Data;
+using Examples.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore;
 
 namespace Examples.EntityFrameworkCore.Articles.DbCapabilities;
