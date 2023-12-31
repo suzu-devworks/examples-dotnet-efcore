@@ -1,10 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 
-namespace Examples.EntityFrameworkCore.ContosoUniversity.Data;
+namespace Examples.ContosoUniversity.Data;
 
-public class SqlServerSchoolContext : SchoolContext
+public class SqlServerSchoolContext(DbContextOptions<SchoolContext> options) : SchoolContext(options)
 {
-    public SqlServerSchoolContext(DbContextOptions<SchoolContext> options) : base(options)
-    {
-    }
 }

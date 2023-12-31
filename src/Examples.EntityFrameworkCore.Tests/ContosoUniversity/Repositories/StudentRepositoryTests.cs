@@ -1,10 +1,10 @@
-using Examples.EntityFrameworkCore.ContosoUniversity.Data;
-using Examples.EntityFrameworkCore.ContosoUniversity.Models;
+using Examples.ContosoUniversity.Data;
+using Examples.ContosoUniversity.Models;
 using Examples.EntityFrameworkCore.InMemory;
-using Examples.EntityFrameworkCore.Xunit;
+using Examples.Xunit;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Examples.EntityFrameworkCore.ContosoUniversity.Repositories;
+namespace Examples.ContosoUniversity.Repositories;
 
 public class StudentRepositoryTests : IDisposable
 {

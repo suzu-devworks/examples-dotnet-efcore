@@ -2,10 +2,26 @@
   "omnisharp.enableEditorConfigSupport": true,
   "omnisharp.enableAsyncCompletion": true,
   "omnisharp.enableMsBuildLoadProjectsOnDemand": true,
-  "omnisharp.enableRoslynAnalyzers": true,
+  "csharpFormatUsings.sortOrder": "System Microsoft",
   "csharpFormatUsings.splitGroups": false,
-  "csharpFormatUsings.sortOrder": "System",
   "csharpFormatUsings.removeUnnecessaryUsings": true,
-  "csharpextensions.useFileScopedNamespace": true,
-  "csharpextensions.privateMemberPrefix": "_",
+  "files.associations": {
+    ".dockerignore": "ignore",
+    "appsettings*.json": "jsonc",
+    "web.config": "xml",
+  },
+  "editor.formatOnSave": true,
+  "editor.formatOnPaste": true,
+  "[csharp]": {
+    "editor.defaultFormatter": "ms-dotnettools.csharp"
+  },
+  "[aspnetcorerazor]": {
+    "editor.defaultFormatter": "ms-dotnettools.csharp"
+  },
+  "[razor]": {
+    "editor.defaultFormatter": "ms-dotnettools.csharp"
+  },
+  "cSpell.words": [
+    "Contoso"
+  ]
 }

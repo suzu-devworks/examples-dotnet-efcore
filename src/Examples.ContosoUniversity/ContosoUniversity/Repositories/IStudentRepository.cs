@@ -1,6 +1,6 @@
-using Examples.EntityFrameworkCore.ContosoUniversity.Models;
+using Examples.ContosoUniversity.Models;
 
-namespace Examples.EntityFrameworkCore.ContosoUniversity.Repositories;
+namespace Examples.ContosoUniversity.Repositories;
 
 public interface IStudentRepository
 {

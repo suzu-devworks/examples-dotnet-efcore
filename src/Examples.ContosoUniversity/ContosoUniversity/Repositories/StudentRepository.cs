@@ -1,9 +1,9 @@
-using Examples.EntityFrameworkCore.ContosoUniversity.Data;
-using Examples.EntityFrameworkCore.ContosoUniversity.Models;
+using Examples.ContosoUniversity.Data;
+using Examples.ContosoUniversity.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
-namespace Examples.EntityFrameworkCore.ContosoUniversity.Repositories;
+namespace Examples.ContosoUniversity.Repositories;
 
 public class StudentRepository : IStudentRepository
 {

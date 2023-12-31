@@ -1,10 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 
-namespace Examples.EntityFrameworkCore.ContosoUniversity.Data;
+namespace Examples.ContosoUniversity.Data;
 
-public class SQLiteSchoolContext : SchoolContext
+public class SQLiteSchoolContext(DbContextOptions<SchoolContext> options) : SchoolContext(options)
 {
-    public SQLiteSchoolContext(DbContextOptions<SchoolContext> options) : base(options)
-    {
-    }
 }

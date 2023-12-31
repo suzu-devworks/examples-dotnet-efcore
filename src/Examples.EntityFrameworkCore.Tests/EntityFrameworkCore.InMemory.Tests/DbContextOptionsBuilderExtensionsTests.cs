@@ -1,18 +1,19 @@
-using Examples.EntityFrameworkCore.ContosoUniversity.Data;
-using Examples.EntityFrameworkCore.ContosoUniversity.Models;
+using Examples.ContosoUniversity.Data;
+using Examples.ContosoUniversity.Models;
+using Examples.EntityFrameworkCore.InMemory;
 using Examples.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore;
 
 namespace Examples.EntityFrameworkCore.Articles.DbCapabilities;
 
-public class DbContextExtensionsTests : IDisposable
+public class DbContextOptionsBuilderExtensionsTests : IDisposable
 {
     private readonly SchoolContext _context;
 
-    public DbContextExtensionsTests()
+    public DbContextOptionsBuilderExtensionsTests()
     {
         var options = new DbContextOptionsBuilder<SchoolContext>()
-            .UseSqlServer()
+            .UseInMemoryDatabaseDefault()
             .Options;
 
         _context = new SchoolContext(options);
@@ -24,13 +25,15 @@ public class DbContextExtensionsTests : IDisposable
         GC.SuppressFinalize(this);
     }
 
+
     [Fact]
     public void WnenCallingGetTableName()
     {
-        _context.GetTableName(new Student()).Is("user.Students");
-        _context.GetTableName(new Enrollment()).Is("user.Enrollments");
-        _context.GetTableName(new Course()).Is("user.Courses");
+        _context.GetTableName(new Student()).Is("Students");
+        _context.GetTableName(new Enrollment()).Is("Enrollments");
+        _context.GetTableName(new Course()).Is("Courses");
 
         return;
     }
+
 }

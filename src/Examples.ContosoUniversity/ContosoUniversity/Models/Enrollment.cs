@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace Examples.EntityFrameworkCore.ContosoUniversity.Models;
+namespace Examples.ContosoUniversity.Models;
 
 public enum Grade
 {

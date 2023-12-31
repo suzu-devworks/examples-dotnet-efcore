@@ -1,6 +1,8 @@
 using Microsoft.Extensions.Logging;
+using Xunit;
+using Xunit.Abstractions;
 
-namespace Examples.EntityFrameworkCore.Xunit;
+namespace Examples.Xunit;
 
 public static class LoggingBuilderExtensions
 {

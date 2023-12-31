@@ -1,4 +1,4 @@
-namespace Examples.EntityFrameworkCore.ContosoUniversity.Models;
+namespace Examples.ContosoUniversity.Models;
 
 public class Student
 {

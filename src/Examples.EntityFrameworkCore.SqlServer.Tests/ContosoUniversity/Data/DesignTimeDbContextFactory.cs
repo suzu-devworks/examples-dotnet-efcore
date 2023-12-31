@@ -2,7 +2,7 @@ using Examples.EntityFrameworkCore.SqlServer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 
-namespace Examples.EntityFrameworkCore.ContosoUniversity.Data;
+namespace Examples.ContosoUniversity.Data;
 
 /// <summary>
 /// Design-time DbContext factory.

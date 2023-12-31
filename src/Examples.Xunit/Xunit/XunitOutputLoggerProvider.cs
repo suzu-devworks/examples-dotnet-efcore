@@ -1,6 +1,8 @@
 using Microsoft.Extensions.Logging;
+using Xunit;
+using Xunit.Abstractions;
 
-namespace Examples.EntityFrameworkCore.Xunit;
+namespace Examples.Xunit;
 
 /// <summary>
 /// <see cref="ILoggerProvider" /> implementation for xunit.
@@ -39,8 +41,9 @@ public class XunitOutputLoggerProvider : ILoggerProvider
             _categoryName = categoryName;
         }
 
-        public IDisposable BeginScope<TState>(TState state)
-          => NoopDisposable.Instance;
+        public IDisposable? BeginScope<TState>(TState state)
+            where TState : notnull
+            => NoopDisposable.Instance;
 
         public bool IsEnabled(LogLevel logLevel)
             => true;

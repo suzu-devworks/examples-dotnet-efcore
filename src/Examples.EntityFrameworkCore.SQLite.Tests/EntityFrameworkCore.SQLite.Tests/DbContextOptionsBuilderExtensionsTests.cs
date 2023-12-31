@@ -1,15 +1,15 @@
-using Examples.EntityFrameworkCore.ContosoUniversity.Data;
-using Examples.EntityFrameworkCore.ContosoUniversity.Models;
+using Examples.ContosoUniversity.Data;
+using Examples.ContosoUniversity.Models;
 using Examples.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore;
 
-namespace Examples.EntityFrameworkCore.Articles.DbCapabilities;
+namespace Examples.EntityFrameworkCore.SQLite.Tests;
 
-public class DbContextExtensionsTests : IDisposable
+public class DbContextOptionsBuilderExtensionsTests : IDisposable
 {
     private readonly SchoolContext _context;
 
-    public DbContextExtensionsTests()
+    public DbContextOptionsBuilderExtensionsTests()
     {
         var options = new DbContextOptionsBuilder<SchoolContext>()
             .UseSqlite()
